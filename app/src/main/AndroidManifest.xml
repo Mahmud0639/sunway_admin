@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SunWayAdmin">
         <activity
+            android:name=".AddSliderImageActivity"
+            android:exported="false" />
+        <activity
             android:name=".PackInfoActivity"
             android:exported="false" />
         <activity
@@ -20,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".UsersActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".PackageUpload"
             android:exported="true" />

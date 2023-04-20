@@ -35,5 +35,25 @@
         app:layout_constraintTop_toBottomOf="@id/packageUploadBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+ <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/allUpdateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All Update"
+        android:textAllCaps="false"
+        android:layout_marginTop="@dimen/_5mdp"
+        app:layout_constraintTop_toBottomOf="@id/packWorkBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+ <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/uploadSliderBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Slider"
+        android:textAllCaps="false"
+        android:layout_marginTop="@dimen/_5mdp"
+        app:layout_constraintTop_toBottomOf="@id/allUpdateBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
