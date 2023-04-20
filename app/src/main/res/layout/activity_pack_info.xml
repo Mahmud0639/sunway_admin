@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PackageUpload">
+    tools:context=".PackInfoActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -18,23 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imagePack"
-                android:layout_width="@dimen/_80mdp"
-                android:layout_height="@dimen/_80mdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/impl1"
-                app:civ_border_width="@dimen/_2mdp"
-                android:scaleType="centerCrop"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagePack"
+            android:layout_width="@dimen/_80mdp"
+            android:layout_height="@dimen/_80mdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/impl1"
+            app:civ_border_width="@dimen/_2mdp"
+            android:scaleType="centerCrop"/>
 
             <ImageView
                 android:id="@+id/selectImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_take_photo"
-                app:layout_constraintTop_toTopOf="@id/imagePack"
+               app:layout_constraintTop_toTopOf="@id/imagePack"
                 app:layout_constraintEnd_toEndOf="@id/imagePack"
                 android:background="@drawable/circle_bg_blue"/>
 
@@ -48,7 +48,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/edit_text_design"
                 android:layout_marginTop="@dimen/_10mdp"
-                android:paddingTop="@dimen/_5mdp"
+               android:paddingTop="@dimen/_5mdp"
                 android:paddingBottom="@dimen/_5mdp"
                 android:paddingStart="@dimen/_10mdp"
                 android:inputType="number"
@@ -64,36 +64,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/edit_text_design"
                 android:layout_marginTop="@dimen/_10mdp"
-                android:paddingTop="@dimen/_5mdp"
+               android:paddingTop="@dimen/_5mdp"
                 android:paddingBottom="@dimen/_5mdp"
                 android:paddingStart="@dimen/_10mdp"
-                android:inputType="text"
-                android:paddingEnd="@dimen/_10mdp"/>
-  <EditText
-                android:id="@+id/sellingET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Sell Price"
-                app:layout_constraintTop_toBottomOf="@id/levelET"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/edit_text_design"
-                android:layout_marginTop="@dimen/_10mdp"
-                android:paddingTop="@dimen/_5mdp"
-                android:paddingBottom="@dimen/_5mdp"
-                android:paddingStart="@dimen/_10mdp"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:paddingEnd="@dimen/_10mdp"/>
 
             <Button
                 android:id="@+id/submitBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30mdp"
-                app:layout_constraintTop_toBottomOf="@id/sellingET"
+                app:layout_constraintTop_toBottomOf="@id/levelET"
                 android:text="Submit"
                 android:background="@drawable/btn_bg"
                 android:layout_marginTop="@dimen/_10mdp"
                 android:textAllCaps="false"/>
+
+
 
 
 

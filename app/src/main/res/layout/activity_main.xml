@@ -6,13 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+   <androidx.appcompat.widget.AppCompatButton
+       android:id="@+id/usersBtn"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Users"
+       android:textAllCaps="false"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/packageUploadBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Package upload"
+        android:layout_marginTop="@dimen/_5mdp"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/usersBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/packWorkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Package Work"
+        android:textAllCaps="false"
+        android:layout_marginTop="@dimen/_5mdp"
+        app:layout_constraintTop_toBottomOf="@id/packageUploadBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

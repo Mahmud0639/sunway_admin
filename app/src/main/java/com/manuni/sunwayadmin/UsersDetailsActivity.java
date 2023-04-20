@@ -19,8 +19,8 @@ public class UsersDetailsActivity extends AppCompatActivity {
     ActivityUsersDetailsBinding binding;
     private DatabaseReference reference;
     private FirebaseAuth auth;
-    private ArrayList<PackageModel> list;
-    private PackageAdapter adapter;
+    private ArrayList<PackageModelAdmin> list;
+    private PackageAdapterAdmin adapter;
     private String userId;
 
     @Override
@@ -44,15 +44,15 @@ public class UsersDetailsActivity extends AppCompatActivity {
                 if (snapshot.exists()){
                     list.clear();
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                        PackageModel data = null;
+                        PackageModelAdmin data = null;
                         try {
-                            data = dataSnapshot.getValue(PackageModel.class);
+                            data = dataSnapshot.getValue(PackageModelAdmin.class);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         list.add(data);
                     }
-                    adapter = new PackageAdapter(UsersDetailsActivity.this,list);
+                    adapter = new PackageAdapterAdmin(UsersDetailsActivity.this,list);
                     binding.packRV.setLayoutManager(new LinearLayoutManager(UsersDetailsActivity.this));
                     binding.packRV.setAdapter(adapter);
                     binding.packRV.setHasFixedSize(true);

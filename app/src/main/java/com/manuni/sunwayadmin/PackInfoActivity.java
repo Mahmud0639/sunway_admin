@@ -17,42 +17,49 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.manuni.sunwayadmin.databinding.ActivityPackageUploadBinding;
+import com.manuni.sunwayadmin.databinding.ActivityPackInfoBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
-import java.util.Objects;
 
-public class PackageUpload extends AppCompatActivity {
-    ActivityPackageUploadBinding binding;
-    private ProgressDialog progressDialog;
+public class PackInfoActivity extends AppCompatActivity {
+    ActivityPackInfoBinding binding;
+    private String paImage,paPerOrder,paLevel,paId;
     private Uri imageUri;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityPackageUploadBinding.inflate(getLayoutInflater());
+        binding = ActivityPackInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        paImage = getIntent().getStringExtra("pacImg");
+        paPerOrder = getIntent().getStringExtra("pacPerOrder");
+        paLevel = getIntent().getStringExtra("pacLevel");
+        paId = getIntent().getStringExtra("pacId");
 
-        progressDialog = new ProgressDialog(PackageUpload.this);
-        progressDialog.setMessage("Uploading...");
+        progressDialog = new ProgressDialog(PackInfoActivity.this);
+        progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
-
-
-        binding.submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkValidation();
-            }
-        });
-
+        Picasso.get().load(paImage).into(binding.imagePack);
+        binding.levelET.setText(paLevel);
+        binding.perOrderET.setText(paPerOrder);
 
         binding.selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showImagePickDialog();
+            }
+        });
+
+        binding.submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkValidation();
             }
         });
     }
@@ -87,7 +94,6 @@ public class PackageUpload extends AppCompatActivity {
     private void checkValidation() {
         String level = binding.levelET.getText().toString().trim();
         String perOrder = binding.perOrderET.getText().toString().trim();
-        String sellPrice = binding.sellingET.getText().toString().trim();
 
         if (level.isEmpty()){
             binding.levelET.setError("Field can't be empty.");
@@ -97,20 +103,16 @@ public class PackageUpload extends AppCompatActivity {
             binding.perOrderET.setError("Field can't be empty.");
             return;
         }
-        if (sellPrice.isEmpty()){
-            binding.sellingET.setError("Field can't be empty.");
-            return;
-        }
 
-        uploadToDatabase(level,perOrder,sellPrice);
+        uploadToDatabase(level,perOrder);
     }
 
-    private void uploadToDatabase(String myLevel,String myPerOrder,String sellingPrice) {
+    private void uploadToDatabase(String myLevel,String myPerOrder) {
         binding.levelET.setText("");
         binding.perOrderET.setText("");
         progressDialog.show();
 
-        DatabaseReference packDB = FirebaseDatabase.getInstance().getReference().child("PackageInfo");
+        DatabaseReference packDB = FirebaseDatabase.getInstance().getReference().child("TaskPackageInfo");
 
 
         if (imageUri==null){
@@ -121,25 +123,24 @@ public class PackageUpload extends AppCompatActivity {
             hashMap.put("levelName",""+myLevel);
             hashMap.put("perOrderQuantity",""+myPerOrder);
             hashMap.put("packImage","");
-            hashMap.put("sellingPrice",sellingPrice);
             hashMap.put("id",""+key);
 
             packDB.child(key).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     progressDialog.dismiss();
-                    Toast.makeText(PackageUpload.this, "Data added successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PackInfoActivity.this, "Data added successfully.", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(Exception e) {
                     progressDialog.dismiss();
-                    Toast.makeText(PackageUpload.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PackInfoActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
                 }
             });
         }else {
             StorageReference ref = FirebaseStorage.getInstance().getReference();
-            String filePathAndName = "packTaskImages/"+System.currentTimeMillis();
+            String filePathAndName = "packTaskInfoImages/"+System.currentTimeMillis();
             ref.child(filePathAndName).putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
 
@@ -153,7 +154,6 @@ public class PackageUpload extends AppCompatActivity {
                     hashMap.put("levelName",""+myLevel);
                     hashMap.put("perOrderQuantity",""+myPerOrder);
                     hashMap.put("packImage",""+downloadUrl);
-                    hashMap.put("sellingPrice",sellingPrice);
                     hashMap.put("id",""+key);
 
 
@@ -161,13 +161,13 @@ public class PackageUpload extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void unused) {
                             progressDialog.dismiss();
-                            Toast.makeText(PackageUpload.this, "Data added successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PackInfoActivity.this, "Data added successfully.", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(PackageUpload.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PackInfoActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

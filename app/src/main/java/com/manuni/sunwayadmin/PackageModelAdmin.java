@@ -1,12 +1,12 @@
 package com.manuni.sunwayadmin;
 
-public class PackageModel {
+public class PackageModelAdmin {
     private String packId,packKey,packName,userId;
 
-    public PackageModel() {
+    public PackageModelAdmin() {
     }
 
-    public PackageModel(String packId, String packKey, String packName,String userId) {
+    public PackageModelAdmin(String packId, String packKey, String packName, String userId) {
         this.packId = packId;
         this.packKey = packKey;
         this.packName = packName;

@@ -10,7 +10,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_3mdp"
+        android:layout_margin="@dimen/_5mdp"
+        app:cardBackgroundColor="#FF9800"
+        app:cardCornerRadius="@dimen/_7mdp"
         app:contentPadding="@dimen/_5mdp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,7 +23,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pack Name"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/_14font_mdp"
+                android:layout_marginStart="@dimen/_5mdp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/confirmBtn"
+                app:layout_constraintTop_toTopOf="@id/confirmBtn"
                 app:layout_constraintStart_toStartOf="parent"/>
 
 
@@ -31,11 +38,23 @@
                 android:layout_height="wrap_content"
                 android:text="Confirm"
                 android:textAllCaps="false"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:background="#ff22"
-                android:textColor="@color/white"/>
+                android:background="@drawable/btn_bg"
+              />
+            <Button
+                android:id="@+id/enableBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable"
+                android:layout_marginEnd="@dimen/_5mdp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:background="@drawable/confirm_btn_bg"
+                app:layout_constraintTop_toTopOf="@id/confirmBtn"
+                app:layout_constraintBottom_toBottomOf="@id/confirmBtn"
+                app:layout_constraintEnd_toStartOf="@id/confirmBtn"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
