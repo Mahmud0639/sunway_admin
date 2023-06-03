@@ -1,7 +1,7 @@
 package com.manuni.sunwayadmin;
 
 public class PackModel {
-    private String id,levelName,perOrderQuantity,packImage;
+    private String id,levelName,perOrderQuantity,packImage,sellingPrice;
 
     public PackModel() {
     }
@@ -11,6 +11,15 @@ public class PackModel {
         this.levelName = levelName;
         this.perOrderQuantity = perOrderQuantity;
         this.packImage = packImage;
+
+    }
+
+    public String getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(String sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
     public String getPackImage() {

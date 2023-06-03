@@ -50,7 +50,7 @@ public class UsersDetailsActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        list.add(data);
+                        list.add(0,data);
                     }
                     adapter = new PackageAdapterAdmin(UsersDetailsActivity.this,list);
                     binding.packRV.setLayoutManager(new LinearLayoutManager(UsersDetailsActivity.this));

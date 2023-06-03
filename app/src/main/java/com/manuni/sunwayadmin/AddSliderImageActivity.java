@@ -52,6 +52,13 @@ public class AddSliderImageActivity extends AppCompatActivity {
         });
 
 
+        binding.showSliderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddSliderImageActivity.this,ShowSliderActivity.class));
+            }
+        });
+
     }
 
     private void checkValidation() {

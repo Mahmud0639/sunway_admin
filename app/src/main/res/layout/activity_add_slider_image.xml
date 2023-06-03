@@ -10,10 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_5mdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:contentPadding="@dimen/_5mdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:contentPadding="@dimen/_5mdp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -22,52 +23,60 @@
                 android:id="@+id/imagePack"
                 android:layout_width="@dimen/_80mdp"
                 android:layout_height="@dimen/_80mdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"
                 android:src="@drawable/impl1"
                 app:civ_border_width="@dimen/_2mdp"
-                android:scaleType="centerCrop"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/selectImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/circle_bg_blue"
                 android:src="@drawable/ic_take_photo"
-                app:layout_constraintTop_toTopOf="@id/imagePack"
                 app:layout_constraintEnd_toEndOf="@id/imagePack"
-                android:background="@drawable/circle_bg_blue"/>
+                app:layout_constraintTop_toTopOf="@id/imagePack" />
 
             <EditText
                 android:id="@+id/titleET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Write title"
-                app:layout_constraintTop_toBottomOf="@id/imagePack"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/edit_text_design"
                 android:layout_marginTop="@dimen/_10mdp"
-                android:paddingTop="@dimen/_5mdp"
-                android:paddingBottom="@dimen/_5mdp"
+                android:background="@drawable/edit_text_design"
+                android:hint="Write title"
                 android:paddingStart="@dimen/_10mdp"
-                android:paddingEnd="@dimen/_10mdp"/>
+                android:paddingTop="@dimen/_5mdp"
+                android:paddingEnd="@dimen/_10mdp"
+                android:paddingBottom="@dimen/_5mdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagePack" />
 
             <Button
                 android:id="@+id/submitBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30mdp"
-                app:layout_constraintTop_toBottomOf="@id/titleET"
-                android:text="Upload"
-                android:background="@drawable/btn_bg"
                 android:layout_marginTop="@dimen/_10mdp"
-                android:textAllCaps="false"/>
+                android:background="@drawable/btn_bg"
+                android:text="Upload"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@id/titleET" />
 
+            <Button
+                android:id="@+id/showSliderBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30mdp"
+                android:layout_marginTop="@dimen/_10mdp"
+                android:background="@drawable/btn_bg"
+                android:text="Show"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/submitBtn" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </androidx.cardview.widget.CardView>

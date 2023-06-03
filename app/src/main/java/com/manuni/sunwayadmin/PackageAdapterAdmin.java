@@ -1,11 +1,13 @@
 package com.manuni.sunwayadmin;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.manuni.sunwayadmin.databinding.PackageConfirmSampleBinding;
 
 import java.util.ArrayList;
@@ -41,8 +45,15 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
         String userIdPack = data.getUserId();
         String userPackKey = data.getPackKey();
         String userPackId = data.getPackId();
+        String userPackPrice = data.getPrice();
+        String account = data.getAccountNumber();
 
         holder.binding.packName.setText(pacName);
+
+        holder.binding.packPrice.setText("Price: $"+userPackPrice);
+
+        holder.binding.accountNumber.setText("Account Number: "+account);
+
 
 
         DatabaseReference myD = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -64,6 +75,159 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
             @Override
             public void onCancelled(DatabaseError error) {
 
+            }
+        });
+
+        holder.binding.confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are your sure to confirm ?")
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                FirebaseDatabase.getInstance().getReference().child("Users").child(userIdPack).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot snapshot) {
+                                        if (snapshot.exists()){
+                                            String totalAsString = ""+snapshot.child("totalCount").getValue();
+                                            String balanceOf = ""+snapshot.child("balance").getValue();
+
+                                            double balanceDouble = Double.parseDouble(balanceOf);
+                                            double totalOfBalance = balanceDouble + Double.parseDouble(userPackPrice);
+
+                                            int totalAsInt = Integer.parseInt(totalAsString);
+                                            int afterReduced = totalAsInt - 1;
+
+                                            HashMap<String,Object> hashMap = new HashMap<>();
+                                            hashMap.put("totalCount",""+afterReduced);
+                                            hashMap.put("balance",""+totalOfBalance);
+
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(userIdPack)
+                                                    .updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+
+                                                    FirebaseFirestore.getInstance().collection("users").document(userIdPack)
+                                                            .update("balance",FieldValue.increment(Double.parseDouble(userPackPrice)));
+
+
+                                                    DatabaseReference myDB;
+
+                                                    myDB = FirebaseDatabase.getInstance().getReference().child("Users");
+
+                                                    String key = myDB.push().getKey();
+                                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                                    hashMap.put(""+pacName,"unlocked");
+                                                    hashMap.put("packKey",""+userPackKey);
+                                                    hashMap.put("packId",""+userPackId);
+                                                    hashMap.put("userId",""+userIdPack);
+                                                    hashMap.put("packName",""+pacName);
+                                                    hashMap.put("status","Joined");
+
+
+                                                    myDB.child(userIdPack).child("userPackInfo").child(userPackKey).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+
+                                                            FirebaseDatabase.getInstance().getReference().child("Users")
+                                                                    .child(userIdPack).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(DataSnapshot snapshot) {
+                                                                    if (snapshot.exists()){
+                                                                        String referUser = ""+snapshot.child("referUid").getValue();
+
+                                                                        FirebaseDatabase.getInstance().getReference().child("Users").child(referUser)
+                                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                                    @Override
+                                                                                    public void onDataChange(DataSnapshot snapshot) {
+                                                                                        if (snapshot.exists()){
+
+                                                                                            String userMainBalance = ""+snapshot.child("balance").getValue();
+
+                                                                                            int userPacPrice = Integer.parseInt(userPackPrice);
+                                                                                            double originalGift = 0.10*userPacPrice;
+                                                                                            double userMainBalanceDouble = Double.parseDouble(userMainBalance);
+                                                                                            double totalUserBalance = originalGift + userMainBalanceDouble;
+
+
+                                                                                            HashMap<String,Object> hash = new HashMap<>();
+                                                                                            hash.put("balance",""+totalUserBalance);
+
+                                                                                            FirebaseDatabase.getInstance().getReference().child("Users")
+                                                                                                    .child(referUser).updateChildren(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                @Override
+                                                                                                public void onSuccess(Void unused) {
+                                                                                                    FirebaseFirestore.getInstance().collection("users")
+                                                                                                            .document(referUser).update("balance", FieldValue.increment(originalGift)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                        @Override
+                                                                                                        public void onSuccess(Void unused) {
+                                                                                                            Toast.makeText(context, "Package updated.", Toast.LENGTH_SHORT).show();
+                                                                                                        }
+                                                                                                    });
+
+                                                                                                }
+                                                                                            });
+                                                                                        }
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onCancelled(DatabaseError error) {
+
+                                                                                    }
+                                                                                });
+
+                                                                    }
+
+
+
+
+
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(DatabaseError error) {
+
+                                                                }
+                                                            });
+
+
+
+
+
+
+                     /*HashMap<String,Object> hashMap1 = new HashMap<>();
+                     hashMap1.put(""+pacName,"false");
+
+                     myDB.child(userIdPack).updateChildren(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                         @Override
+                         public void onSuccess(Void unused) {
+                             Toast.makeText(context, "Pack has been updated in the user info.", Toast.LENGTH_SHORT).show();
+                         }
+                     });*/
+                                                        }
+                                                    });
+
+
+                                                  //  Toast.makeText(context, "Pack is now in enabled mode.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
             }
         });
 
@@ -111,48 +275,25 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
             }
         });
 
-        holder.binding.confirmBtn.setOnClickListener(new View.OnClickListener() {
+
+
+       /* holder.binding.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
 
-                DatabaseReference myDB;
 
-                 myDB = FirebaseDatabase.getInstance().getReference().child("Users");
-
-                String key = myDB.push().getKey();
-                HashMap<String,Object> hashMap = new HashMap<>();
-                hashMap.put(""+pacName,"unlocked");
-                hashMap.put("packKey",""+userPackKey);
-                hashMap.put("packId",""+userPackId);
-                hashMap.put("userId",""+userIdPack);
-                hashMap.put("packName",""+pacName);
-                hashMap.put("status","Joined");
-
-
-             myDB.child(userIdPack).child("userPackInfo").child(userPackKey).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                 @Override
-                 public void onSuccess(Void unused) {
-                     Toast.makeText(context, "Package updated.", Toast.LENGTH_SHORT).show();
-
-                     /*HashMap<String,Object> hashMap1 = new HashMap<>();
-                     hashMap1.put(""+pacName,"false");
-
-                     myDB.child(userIdPack).updateChildren(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                         @Override
-                         public void onSuccess(Void unused) {
-                             Toast.makeText(context, "Pack has been updated in the user info.", Toast.LENGTH_SHORT).show();
-                         }
-                     });*/
-                 }
-             });
 
 
 
             }
-        });
+        });*/
     }
+
+
+
+
 
     @Override
     public int getItemCount() {

@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.manuni.sunwayadmin.databinding.UsersSampleBinding;
 import com.squareup.picasso.Picasso;
 
@@ -40,6 +44,34 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
         String userTimeStamp = data.getTimestamp();
         String userId = data.getUid();
 
+        FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("uid").equalTo(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                        String totalCountOrder = ""+dataSnapshot.child("totalCount").getValue();
+
+                        if (totalCountOrder.equals("0")){
+                            holder.binding.totalCountOrder.setVisibility(View.INVISIBLE);
+                        }else {
+                            holder.binding.totalCountOrder.setText(totalCountOrder);
+                            holder.binding.totalCountOrder.setVisibility(View.VISIBLE);
+                        }
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+
+
         try {
             Picasso.get().load(userProfile).placeholder(R.drawable.ic_person).into(holder.binding.userImage);
         } catch (Exception e) {
@@ -61,6 +93,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
         });
 
     }
+
 
     @Override
     public int getItemCount() {

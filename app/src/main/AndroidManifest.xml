@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.manuni.sunwayadmin">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SunWayAdmin">
+        <activity
+            android:name=".WithdrawApproveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdatePackImage"
+            android:exported="false" />
+        <activity
+            android:name=".AllPackagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShowSliderActivity"
+            android:exported="false" />
         <activity
             android:name=".AddSliderImageActivity"
             android:exported="false" />

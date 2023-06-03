@@ -26,23 +26,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/packWorkBtn"
+        android:id="@+id/withdrawListBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Package Work"
+        android:text="Withdraw List"
         android:textAllCaps="false"
         android:layout_marginTop="@dimen/_5mdp"
         app:layout_constraintTop_toBottomOf="@id/packageUploadBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
  <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/allUpdateBtn"
+        android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All Update"
+        android:text="Update Package"
         android:textAllCaps="false"
         android:layout_marginTop="@dimen/_5mdp"
-        app:layout_constraintTop_toBottomOf="@id/packWorkBtn"
+        app:layout_constraintTop_toBottomOf="@id/withdrawListBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
  <androidx.appcompat.widget.AppCompatButton
@@ -52,7 +52,7 @@
         android:text="Add Slider"
         android:textAllCaps="false"
         android:layout_marginTop="@dimen/_5mdp"
-        app:layout_constraintTop_toBottomOf="@id/allUpdateBtn"
+        app:layout_constraintTop_toBottomOf="@id/updateBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

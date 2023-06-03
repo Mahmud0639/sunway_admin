@@ -42,10 +42,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.packWorkBtn.setOnClickListener(new View.OnClickListener() {
+     /*   binding.packWorkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,PackageWorkActivity.class));
+            }
+        });*/
+
+
+        binding.withdrawListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,WithdrawApproveActivity.class));
             }
         });
 
@@ -56,7 +64,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.allUpdateBtn.setOnClickListener(new View.OnClickListener() {
+        binding.updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,AllPackagesActivity.class));
+            }
+        });
+
+      /*  binding.allUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -108,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
+*/
 
 
     }
