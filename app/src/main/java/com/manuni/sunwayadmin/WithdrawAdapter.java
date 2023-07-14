@@ -144,6 +144,15 @@ public class WithdrawAdapter extends RecyclerView.Adapter<WithdrawAdapter.Withdr
             }
         });
 
+    /*    holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
+        holder.binding.accountNumber.setText(trcAddress);
+        holder.binding.remainsBalance.setText("$"+remainedBalance);
+
     }
 
     @Override

@@ -4,56 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee"
     tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunway Admin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/usersBtn"
+        android:textSize="@dimen/_27font_mdp"
+        android:textColor="#393838"
+        android:fontFamily="@font/roboto_bold"/>
 
    <androidx.appcompat.widget.AppCompatButton
        android:id="@+id/usersBtn"
-       android:layout_width="wrap_content"
+       android:layout_width="@dimen/_200mdp"
        android:layout_height="wrap_content"
        android:text="Users"
        android:textAllCaps="false"
+       android:layout_marginBottom="@dimen/_5mdp"
+       app:layout_constraintBottom_toTopOf="@id/packageUploadBtn"
+       app:layout_constraintVertical_chainStyle="packed"
+       android:background="@drawable/edit_text_design"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintTop_toTopOf="parent"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/packageUploadBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_200mdp"
         android:layout_height="wrap_content"
         android:text="Package upload"
         android:layout_marginTop="@dimen/_5mdp"
+        android:background="@drawable/text_approved_bg"
         android:textAllCaps="false"
+        android:layout_marginBottom="@dimen/_5mdp"
+        app:layout_constraintBottom_toTopOf="@id/withdrawListBtn"
         app:layout_constraintTop_toBottomOf="@id/usersBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/withdrawListBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_200mdp"
         android:layout_height="wrap_content"
         android:text="Withdraw List"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@id/updateBtn"
         android:layout_marginTop="@dimen/_5mdp"
+        android:layout_marginBottom="@dimen/_5mdp"
+        android:background="@drawable/edit_text_design"
         app:layout_constraintTop_toBottomOf="@id/packageUploadBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
  <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/updateBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_200mdp"
         android:layout_height="wrap_content"
         android:text="Update Package"
         android:textAllCaps="false"
+     android:background="@drawable/text_approved_bg"
         android:layout_marginTop="@dimen/_5mdp"
+     android:layout_marginBottom="@dimen/_5mdp"
+     app:layout_constraintBottom_toTopOf="@id/uploadSliderBtn"
         app:layout_constraintTop_toBottomOf="@id/withdrawListBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
- <androidx.appcompat.widget.AppCompatButton
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/uploadSliderBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_200mdp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5mdp"
+        android:background="@drawable/edit_text_design"
         android:text="Add Slider"
         android:textAllCaps="false"
-        android:layout_marginTop="@dimen/_5mdp"
-        app:layout_constraintTop_toBottomOf="@id/updateBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/updateBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

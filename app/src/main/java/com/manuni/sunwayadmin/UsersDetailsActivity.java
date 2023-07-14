@@ -68,4 +68,14 @@ public class UsersDetailsActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        binding.packRV.setAdapter(null);
+
+        adapter = null;
+
+    }
 }

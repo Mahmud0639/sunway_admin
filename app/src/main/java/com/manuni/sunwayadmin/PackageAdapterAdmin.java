@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,9 +29,12 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
     private Context context;
     private ArrayList<PackageModelAdmin> list;
 
+    private DatabaseReference dRef;
     public PackageAdapterAdmin(Context context, ArrayList<PackageModelAdmin> list) {
         this.context = context;
         this.list = list;
+
+        dRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -163,6 +168,7 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
                                                                                                             .document(referUser).update("balance", FieldValue.increment(originalGift)).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                         @Override
                                                                                                         public void onSuccess(Void unused) {
+                                                                                                            createIncomePack(data);
                                                                                                             Toast.makeText(context, "Package updated.", Toast.LENGTH_SHORT).show();
                                                                                                         }
                                                                                                     });
@@ -291,8 +297,85 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
         });*/
     }
 
+    private void createIncomePack(PackageModelAdmin myData) {
+
+        dRef.child("AllProductsPriceInfo").child(myData.getPackId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                        String perOrder = ""+dataSnapshot.child("perOrder").getValue();
+                        String productId = ""+dataSnapshot.child("productId").getValue();
+                        String productImage = ""+dataSnapshot.child("productImage").getValue();
+                        String productNumber = ""+dataSnapshot.child("productNumber").getValue();
+                        String productSellingPrice = ""+dataSnapshot.child("productSellingPrice").getValue();
+
+                        HashMap<String,Object> hashMap = new HashMap<>();
+                        hashMap.put("perOrder",""+perOrder);
+                        hashMap.put("productId",""+productId);
+                        hashMap.put("productImage",""+productImage);
+                        hashMap.put("productNumber",""+productNumber);
+                        hashMap.put("productSellingPrice",""+productSellingPrice);
+                        hashMap.put("packId",""+myData.getPackId());
+
+                        dRef.child("SpecificUsersIncomePack").child(myData.getUserId()).child(myData.getPackId()).child(productId).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                           /*     HashMap<String,Object> hashMap1 = new HashMap<>();
+                                hashMap1.put("equalPosition","1");
+
+                                Toast.makeText(context, "Our data "+myData.getUserId(), Toast.LENGTH_SHORT).show();
+                                dRef.child("Users").child(myData.getUserId()).updateChildren(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+                                    }
+                                });*/
+
+                                dRef.child("Users").child(myData.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String userBalance = ""+snapshot.child("balance").getValue();
+                                        HashMap<String,Object> hashMap1 = new HashMap<>();
+                                        hashMap1.put("balance",""+userBalance);
+
+                                        dRef.child("UsersTemporaryBalance").child(myData.getUserId()).setValue(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(context, "All income packages has set successfully.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
 
 
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+    }
 
 
     @Override
@@ -309,4 +392,5 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
             binding  = PackageConfirmSampleBinding.bind(itemView);
         }
     }
+
 }

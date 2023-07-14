@@ -62,6 +62,16 @@ public class UpdatePackImage extends AppCompatActivity {
             binding.imagePack.setImageResource(R.drawable.impl1);
         }
 
+        binding.addProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent packIntent = new Intent(UpdatePackImage.this,AddProductActivity.class);
+                packIntent.putExtra("packageId",""+idPack);
+                packIntent.putExtra("perOrder",""+perOrderPack);
+                startActivity(packIntent);
+            }
+        });
+
         binding.selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,23 +101,23 @@ public class UpdatePackImage extends AppCompatActivity {
                 }else if (TextUtils.isEmpty(sellPrice)){
                     binding.sellingET.setError("Field can't be empty!");
                 }else if (imageUri == null){
-                    gotoDatabase();
+                    gotoDatabase(levelName,perOrder,sellPrice);
 
                 }else {
-                    uploadStorage();
+                    uploadStorage(levelName,perOrder,sellPrice);
                 }
             }
         });
 
     }
 
-    private void gotoDatabase() {
+    private void gotoDatabase(String levName,String perOrder, String sellP) {
         progressDialog.show();
 
         HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("levelName",""+levelPack);
-        hashMap.put("perOrderQuantity",""+perOrderPack);
-        hashMap.put("sellingPrice",""+sellPrice);
+        hashMap.put("levelName",""+levName);
+        hashMap.put("perOrderQuantity",""+perOrder);
+        hashMap.put("sellingPrice",""+sellP);
 
         DatabaseReference myDB = FirebaseDatabase.getInstance().getReference().child("PackageInfo");
         myDB.child(idPack).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -121,7 +131,7 @@ public class UpdatePackImage extends AppCompatActivity {
 
     }
 
-    private void uploadStorage() {
+    private void uploadStorage(String levName,String orderPer,String sellPr) {
         progressDialog.show();
         String pathAndName = "Package_images_update/" + "" + System.currentTimeMillis();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(pathAndName);
@@ -133,10 +143,10 @@ public class UpdatePackImage extends AppCompatActivity {
                 Uri downloadUrl = uriTask.getResult();
                 if (uriTask.isSuccessful()){
                     HashMap<String,Object> hashMap = new HashMap<>();
-                    hashMap.put("levelName",""+levelPack);
+                    hashMap.put("levelName",""+levName);
                     hashMap.put("packImage",""+downloadUrl);
-                    hashMap.put("perOrderQuantity",""+perOrderPack);
-                    hashMap.put("sellingPrice",""+sellPrice);
+                    hashMap.put("perOrderQuantity",""+orderPer);
+                    hashMap.put("sellingPrice",""+sellPr);
 
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("PackageInfo");
                     db.child(idPack).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {

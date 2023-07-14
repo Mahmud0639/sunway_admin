@@ -31,10 +31,10 @@ public class UsersActivity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        binding.loadingCircle.setVisibility(View.VISIBLE);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                binding.progressBar.setVisibility(View.VISIBLE);
                 if (snapshot.exists()){
 
                     list.clear();
@@ -49,14 +49,14 @@ public class UsersActivity extends AppCompatActivity {
                     binding.usersRV.setHasFixedSize(true);
                     adapter.notifyDataSetChanged();
 
-                    binding.progressBar.setVisibility(View.GONE);
+                   binding.loadingCircle.setVisibility(View.INVISIBLE);
                 }
 
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                binding.progressBar.setVisibility(View.GONE);
+             binding.loadingCircle.setVisibility(View.INVISIBLE);
             }
         });
 

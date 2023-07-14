@@ -37,7 +37,7 @@ public class WithdrawApproveActivity extends AppCompatActivity {
                 if (snapshot.exists()){
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                         WithdrawModel data = dataSnapshot.getValue(WithdrawModel.class);
-                        list.add(data);
+                        list.add(0,data);
                     }
 
                     binding.withdrawApproveRV.setLayoutManager(new LinearLayoutManager(WithdrawApproveActivity.this));
