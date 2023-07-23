@@ -118,6 +118,8 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
                                                             .update("balance",FieldValue.increment(Double.parseDouble(userPackPrice)));
 
 
+
+
                                                     DatabaseReference myDB;
 
                                                     myDB = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -135,6 +137,8 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
                                                     myDB.child(userIdPack).child("userPackInfo").child(userPackKey).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void unused) {
+                                                     createIncomePack(data);
+                                                    Toast.makeText(context, "Package updated.", Toast.LENGTH_SHORT).show();
 
                                                             FirebaseDatabase.getInstance().getReference().child("Users")
                                                                     .child(userIdPack).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -142,6 +146,7 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
                                                                 public void onDataChange(DataSnapshot snapshot) {
                                                                     if (snapshot.exists()){
                                                                         String referUser = ""+snapshot.child("referUid").getValue();
+
 
                                                                         FirebaseDatabase.getInstance().getReference().child("Users").child(referUser)
                                                                                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -168,8 +173,8 @@ public class PackageAdapterAdmin extends RecyclerView.Adapter<PackageAdapterAdmi
                                                                                                             .document(referUser).update("balance", FieldValue.increment(originalGift)).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                         @Override
                                                                                                         public void onSuccess(Void unused) {
-                                                                                                            createIncomePack(data);
-                                                                                                            Toast.makeText(context, "Package updated.", Toast.LENGTH_SHORT).show();
+                                                                                                          //  createIncomePack(data);
+                                                                                                           // Toast.makeText(context, "Package updated.", Toast.LENGTH_SHORT).show();
                                                                                                         }
                                                                                                     });
 

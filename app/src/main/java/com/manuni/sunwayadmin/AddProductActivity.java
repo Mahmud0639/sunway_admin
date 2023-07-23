@@ -65,6 +65,16 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
+        binding.showProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddProductActivity.this,ShowProductsActivity.class);
+                intent.putExtra("packId",""+paId);
+                startActivity(intent);
+                //startActivity(new Intent(AddProductActivity.this,ShowProductsActivity.class));
+            }
+        });
+
 
         binding.selectImage.setOnClickListener(new View.OnClickListener() {
             @Override

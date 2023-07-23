@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/_5mdp"
+        app:contentPadding="@dimen/_5mdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/prImage"
+                android:layout_width="@dimen/_80mdp"
+                android:layout_height="@dimen/_80mdp"
+                android:src="@drawable/impl1"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/proName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Id: "
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginStart="@dimen/_5mdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@id/proNumber"
+                app:layout_constraintStart_toEndOf="@id/prImage"/>
+            <TextView
+                android:id="@+id/proNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product No: 2"
+                app:layout_constraintBottom_toTopOf="@id/sellingPrice"
+                app:layout_constraintStart_toStartOf="@id/proName"
+                app:layout_constraintTop_toBottomOf="@id/proName"/>
+            <TextView
+                android:id="@+id/sellingPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sell Price: $200"
+                app:layout_constraintBottom_toBottomOf="@id/prImage"
+                app:layout_constraintTop_toBottomOf="@id/proNumber"
+                app:layout_constraintStart_toStartOf="@id/proNumber"/>
+
+            <ImageButton
+                android:layout_width="@dimen/_30mdp"
+                android:layout_height="@dimen/_30mdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_arrow"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

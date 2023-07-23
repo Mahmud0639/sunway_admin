@@ -121,13 +121,24 @@
                 android:maxLines="2"
                 android:fontFamily="@font/roboto_medium"
                 android:ellipsize="end"/>
+            <Button
+                android:id="@+id/copyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30mdp"
+                android:text="copy"
+                android:background="@drawable/copy_btn_style"
+                android:layout_marginStart="@dimen/_5mdp"
+                app:layout_constraintTop_toTopOf="@id/accountNumber"
+                app:layout_constraintBottom_toBottomOf="@id/accountNumber"
+                app:layout_constraintStart_toEndOf="@id/accountNumber"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/approveBtn"
                 android:layout_width="@dimen/_200mdp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5mdp"
+                android:layout_marginTop="@dimen/_15mdp"
                 android:layout_marginBottom="@dimen/_5mdp"
+                app:layout_goneMarginTop="@dimen/_10mdp"
                 android:background="@drawable/click_effect_textview"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"

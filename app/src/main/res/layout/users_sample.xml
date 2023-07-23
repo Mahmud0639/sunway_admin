@@ -79,6 +79,19 @@
                 app:layout_constraintBottom_toBottomOf="@id/userImage"/>
 
 
+            <TextView
+                android:id="@+id/userBalance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Balance: $44.50"
+                app:layout_constraintTop_toTopOf="@id/userName"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/_15mdp"
+                app:layout_constraintBottom_toBottomOf="@id/userName"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@id/userName"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

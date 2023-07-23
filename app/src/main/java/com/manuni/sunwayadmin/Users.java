@@ -1,12 +1,12 @@
 package com.manuni.sunwayadmin;
 
 public class Users {
-    private String email,fullName,online,phoneNumber,profileImage,timestamp,uid;
+    private String email,fullName,online,phoneNumber,profileImage,timestamp,uid,balance;
 
     public Users() {
     }
 
-    public Users(String email, String fullName, String online, String phoneNumber, String profileImage, String timestamp, String uid) {
+    public Users(String email, String fullName, String online, String phoneNumber, String profileImage, String timestamp, String uid,String balance) {
         this.email = email;
         this.fullName = fullName;
         this.online = online;
@@ -14,6 +14,15 @@ public class Users {
         this.profileImage = profileImage;
         this.timestamp = timestamp;
         this.uid = uid;
+        this.balance = balance;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 
     public String getEmail() {

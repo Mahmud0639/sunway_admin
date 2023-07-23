@@ -1,5 +1,7 @@
 package com.manuni.sunwayadmin;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -81,6 +83,8 @@ public class WithdrawAdapter extends RecyclerView.Adapter<WithdrawAdapter.Withdr
 
 
 
+
+
         }
 
         try {
@@ -144,6 +148,19 @@ public class WithdrawAdapter extends RecyclerView.Adapter<WithdrawAdapter.Withdr
             }
         });
 
+        holder.binding.copyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String copyData = data.getTrcAddress();
+
+                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("text",copyData);
+                clipboardManager.setPrimaryClip(clipData);
+
+                Toast.makeText(context, "Text copied!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     /*    holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +168,10 @@ public class WithdrawAdapter extends RecyclerView.Adapter<WithdrawAdapter.Withdr
             }
         });*/
         holder.binding.accountNumber.setText(trcAddress);
-        holder.binding.remainsBalance.setText("$"+remainedBalance);
+
+        double remBalance = Double.parseDouble(remainedBalance);
+
+        holder.binding.remainsBalance.setText(String.format("$%.2f",remBalance));
 
     }
 

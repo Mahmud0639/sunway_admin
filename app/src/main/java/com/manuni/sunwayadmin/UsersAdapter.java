@@ -2,6 +2,8 @@ package com.manuni.sunwayadmin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
         String userProfile = data.getProfileImage();
         String userTimeStamp = data.getTimestamp();
         String userId = data.getUid();
+        String userBal = data.getBalance();
 
         FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("uid").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,6 +85,20 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
 
         holder.binding.userEmail.setText(email);
         holder.binding.userName.setText(userFullName);
+
+        double userBalAsDouble = Double.parseDouble(userBal);
+
+
+        String balText = String.format("Balance: <b>$%.2f</b>",userBalAsDouble);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Spanned spannedBalText = Html.fromHtml(balText,Html.FROM_HTML_MODE_LEGACY);
+            holder.binding.userBalance.setText(spannedBalText);
+        }else {
+          //  holder.binding.userBalance.setText(String.format("Balance: $%.2f",userBalAsDouble));
+            holder.binding.userBalance.setText(Html.fromHtml(balText));
+        }
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

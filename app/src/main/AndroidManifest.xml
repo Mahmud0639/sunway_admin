@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SunWayAdmin">
         <activity
+            android:name=".UpdateProducts"
+            android:exported="false" />
+        <activity
+            android:name=".ShowProductsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddProductActivity"
             android:exported="false" />
         <activity

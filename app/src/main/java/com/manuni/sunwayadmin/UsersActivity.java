@@ -1,6 +1,7 @@
 package com.manuni.sunwayadmin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
@@ -43,8 +44,14 @@ public class UsersActivity extends AppCompatActivity {
                         list.add(data);
 
                     }
+
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UsersActivity.this);
+
+                    DividerItemDecoration itemDecoration = new DividerItemDecoration(UsersActivity.this,linearLayoutManager.getOrientation());
+
                     adapter = new UsersAdapter(UsersActivity.this,list);
-                    binding.usersRV.setLayoutManager(new LinearLayoutManager(UsersActivity.this));
+                    binding.usersRV.setLayoutManager(linearLayoutManager);
+                    binding.usersRV.addItemDecoration(itemDecoration);
                     binding.usersRV.setAdapter(adapter);
                     binding.usersRV.setHasFixedSize(true);
                     adapter.notifyDataSetChanged();
